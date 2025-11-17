@@ -9,19 +9,16 @@ const links = computed<NavigationMenuItem[]>(() => [
   {
     label: 'Home',
     to: { name: 'home' },
-    icon: 'i-lucide-house',
     active: route.name === 'home',
   },
   {
     label: 'Sign in',
     to: { name: 'login' },
-    icon: 'i-lucide-door-open',
     active: route.name === 'login',
   },
   {
     label: 'Sign up',
     to: { name: 'register' },
-    icon: 'i-lucide-pen',
     active: route.name === 'register',
   },
 ])
