@@ -27,7 +27,22 @@ const router = createRouter({
         title: 'Register',
       },
     },
+    {
+      path: '/auth/dashboard',
+      name: 'dashboard',
+      component: () => import('../pages/auth/dashboard-page.vue'),
+      meta: {
+        title: 'Dashboard',
+      },
+    },
   ],
+})
+
+
+router.beforeEach((to) => {
+  const appName = `Pernance| ${to.meta.title}`
+
+  document.title = appName
 })
 
 export default router

@@ -36,3 +36,5 @@ auto-imports.d.ts
 components.d.ts
 # Vitest
 __screenshots__/
+
+.env

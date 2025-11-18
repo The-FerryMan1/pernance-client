@@ -3,6 +3,8 @@ import defaultLayout from '@/layouts/default-layout.vue'
 import z from 'zod'
 import type { FormSubmitEvent, AuthFormField, ButtonProps } from '@nuxt/ui'
 import { computed } from 'vue'
+import { authClient } from '../../lib/auth-client.ts'
+
 
 const toast = useToast()
 
@@ -25,6 +27,7 @@ const fields: AuthFormField[] = [
     name: 'remember',
     label: 'Remember me',
     type: 'checkbox',
+
   },
 ]
 
@@ -40,35 +43,35 @@ const links = computed<ButtonProps[]>(() => [
 
 const schema = z.object({
   email: z.email('Invalid email'),
-  password: z.string('Password is required').min(8, 'Must be atleast 8 characters'),
+  password: z.string('Password is required').min(8, 'Must be atleast 8 characters')
 })
 
 type Schema = z.infer<typeof schema>
 async function submit(event: FormSubmitEvent<Schema>) {
-  toast.add({ title: 'Authentication', description: "You're signed in!", color: 'success' })
-  console.log(event.data)
+
+  await authClient.signIn.email({
+    email: event.data.email,
+    password: event.data.password
+  }, {
+    onSuccess(ctx) {
+      toast.add({ title: 'Authentication success', description: "You're signed in!", color: 'success' })
+    },
+    onError(ctx) {
+      toast.add({ title: 'Authentication failed', description: "Failed to sign in", color: 'error' })
+    }
+  })
+
 }
 </script>
 
 <template>
   <defaultLayout>
     <UPage>
-      <UPageSection
-        title="Sign in with email"
-        description="Manage your expenses now!"
-        orientation="horizontal"
-        headline="Sign in"
-        :links
-      >
+      <UPageSection title="Sign in with email" description="Manage your expenses now!" orientation="horizontal"
+        headline="Sign in" :links>
         <UPageCard>
-          <UAuthForm
-            :schema="schema"
-            title="Login"
-            description="Enter your credentials to access your account."
-            icon="i-lucide-user"
-            :fields="fields"
-            @submit="submit"
-          />
+          <UAuthForm :schema="schema" title="Login" description="Enter your credentials to access your account."
+            icon="i-lucide-user" :fields="fields" @submit="submit" />
         </UPageCard>
       </UPageSection>
     </UPage>

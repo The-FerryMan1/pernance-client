@@ -3,6 +3,10 @@ import defaultLayout from '@/layouts/default-layout.vue'
 import z from 'zod'
 import type { FormSubmitEvent, AuthFormField, ButtonProps } from '@nuxt/ui'
 import { computed } from 'vue'
+import { authClient } from '../../lib/auth-client.ts'
+
+
+const session = authClient.useSession()
 
 const toast = useToast()
 
@@ -63,34 +67,34 @@ const schema = z
 
 type Schema = z.infer<typeof schema>
 async function submit(event: FormSubmitEvent<Schema>) {
-  toast.add({
-    title: 'Registration complete',
-    description: 'You have successfully created an account',
-    color: 'success',
+
+
+  await authClient.signUp.email({
+    name: event.data.name,
+    email: event.data.email,
+    password: event.data.password
+  }, {
+    onSuccess(ctx) {
+      toast.add({ title: 'Registration', description: "You have successfully created an account", color: 'success' })
+    },
+    onError(ctx) {
+      toast.add({ title: 'Registration failed', description: "Failed to create an account. Please try again later", color: 'error' })
+    }
   })
-  console.log(event.data)
+
+
+
 }
 </script>
 
 <template>
   <defaultLayout>
     <UPage>
-      <UPageSection
-        title="Create an account"
-        description="Fill out the form to create an account"
-        orientation="horizontal"
-        headline="Sign up"
-        :links
-      >
+      <UPageSection title="Create an account" description="Fill out the form to create an account"
+        orientation="horizontal" headline="Sign up" :links>
         <UPageCard>
-          <UAuthForm
-            :schema="schema"
-            title="Sign up"
-            description="Enter your credentials to create an account."
-            icon="i-lucide-user"
-            :fields="fields"
-            @submit="submit"
-          />
+          <UAuthForm :schema="schema" title="Sign up" description="Enter your credentials to create an account."
+            icon="i-lucide-user" :fields="fields" @submit="submit" />
         </UPageCard>
       </UPageSection>
     </UPage>
