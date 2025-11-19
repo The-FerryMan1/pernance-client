@@ -2,7 +2,7 @@
 import type { NavigationMenuItem } from '@nuxt/ui'
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { authClient } from '../../lib/auth-client'
+import { authClient } from '../lib/auth-client'
 
 const route = useRoute()
 
@@ -19,21 +19,21 @@ const items = computed<NavigationMenuItem[]>(() => [
     },
     {
         label: 'Expenses',
-        icon: "i-lucide-banknote-arrow-down"
-        // to: { name: 'login' },
-        // active: route.name === 'login',
+        icon: "i-lucide-banknote-arrow-down",
+        to: { name: 'expenses' },
+        active: route.name === 'expenses',
     },
     {
-        label: 'Trasanction history',
-        icon: "i-lucide-arrow-left-right"
-        // to: { name: 'login' },
-        // active: route.name === 'login',
+        label: 'Transanction history',
+        icon: "i-lucide-arrow-left-right",
+        to: { name: 'transactions' },
+        active: route.name === 'transactions',
     },
     {
         label: 'Categories',
-        icon: "i-lucide-chart-bar-stacked"
-        // to: { name: 'login' },
-        // active: route.name === 'login',
+        icon: "i-lucide-chart-bar-stacked",
+        to: { name: 'categories' },
+        active: route.name === 'categories',
     },
 
     {

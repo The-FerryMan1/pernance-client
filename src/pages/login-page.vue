@@ -3,9 +3,11 @@ import defaultLayout from '@/layouts/default-layout.vue'
 import z from 'zod'
 import type { FormSubmitEvent, AuthFormField, ButtonProps } from '@nuxt/ui'
 import { computed } from 'vue'
-import { authClient } from '../../lib/auth-client.ts'
+import { authClient } from '../lib/auth-client.ts'
+import { useRouter } from 'vue-router'
 
 
+const router = useRouter()
 const toast = useToast()
 
 const fields: AuthFormField[] = [
@@ -55,9 +57,10 @@ async function submit(event: FormSubmitEvent<Schema>) {
   }, {
     onSuccess(ctx) {
       toast.add({ title: 'Authentication success', description: "You're signed in!", color: 'success' })
+      router.push('/auth/dashboard')
     },
     onError(ctx) {
-      toast.add({ title: 'Authentication failed', description: "Failed to sign in", color: 'error' })
+      toast.add({ title: 'Authentication failed', description: "Invalid email or password", color: 'error' })
     }
   })
 

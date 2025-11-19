@@ -3,11 +3,13 @@ import defaultLayout from '@/layouts/default-layout.vue'
 import z from 'zod'
 import type { FormSubmitEvent, AuthFormField, ButtonProps } from '@nuxt/ui'
 import { computed } from 'vue'
-import { authClient } from '../../lib/auth-client.ts'
+import { authClient } from '../lib/auth-client.ts'
+import { useRouter } from 'vue-router'
+
 
 
 const session = authClient.useSession()
-
+const router = useRouter()
 const toast = useToast()
 
 const fields: AuthFormField[] = [
@@ -76,6 +78,7 @@ async function submit(event: FormSubmitEvent<Schema>) {
   }, {
     onSuccess(ctx) {
       toast.add({ title: 'Registration', description: "You have successfully created an account", color: 'success' })
+      router.push('/auth/dashboard')
     },
     onError(ctx) {
       toast.add({ title: 'Registration failed', description: "Failed to create an account. Please try again later", color: 'error' })
