@@ -39,11 +39,11 @@ const router = createRouter({
       },
     },
     {
-      path: '/auth/expenses',
-      name: 'expenses',
-      component: () => import('../pages/auth/expenses-page.vue'),
+      path: '/auth/balances',
+      name: 'balances',
+      component: () => import('../pages/auth/balances-page.vue'),
       meta: {
-        title: 'Expenses',
+        title: 'Balancesenses',
         requiresAuth: true
       },
     },

@@ -6,7 +6,7 @@ import authLayout from '@/layouts/auth-layout.vue';
 
 <template>
     <authLayout>
-        <div>this is the expenses</div>
+        <div>this is the balances</div>
 
     </authLayout>
 </template>

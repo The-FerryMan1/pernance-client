@@ -18,10 +18,10 @@ const items = computed<NavigationMenuItem[]>(() => [
         icon: "i-lucide-home"
     },
     {
-        label: 'Expenses',
+        label: 'Balances',
         icon: "i-lucide-banknote-arrow-down",
-        to: { name: 'expenses' },
-        active: route.name === 'expenses',
+        to: { name: 'balances' },
+        active: route.name === 'balances',
     },
     {
         label: 'Transanction history',
@@ -87,11 +87,17 @@ const items = computed<NavigationMenuItem[]>(() => [
 
         <UDashboardPanel>
             <template #header>
-                <UDashboardNavbar title="Dashboard" />
+                <UDashboardNavbar title="Dashboard">
+
+                    <template #right>
+                        <UColorModeButton />
+                    </template>
+                </UDashboardNavbar>
             </template>
             <template #body>
                 <slot />
             </template>
+
         </UDashboardPanel>
     </UDashboardGroup>
 </template>
