@@ -87,7 +87,7 @@ const items = computed<NavigationMenuItem[]>(() => [
 
         <UDashboardPanel>
             <template #header>
-                <UDashboardNavbar title="Dashboard">
+                <UDashboardNavbar :title="String(route.name)">
 
                     <template #right>
                         <UColorModeButton />
