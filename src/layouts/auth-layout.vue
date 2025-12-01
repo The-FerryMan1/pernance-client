@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
-import { computed } from 'vue'
+import { computed, shallowRef, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { authClient } from '../lib/auth-client'
-
+import { sub } from 'date-fns'
 const route = useRoute()
 
 const router = useRouter()
@@ -70,11 +70,13 @@ const items = computed<NavigationMenuItem[]>(() => [
     },
 
 ])
+
+
 </script>
 
 <template>
     <UDashboardGroup>
-        <UDashboardSidebar>
+        <UDashboardSidebar collapsible resizable>
             <template #header="{ collapsed }">
                 <h1 v-if="!collapsed" class="h-5 w-auto shrink-0 font-bold">Pernace</h1>
             </template>
@@ -85,10 +87,12 @@ const items = computed<NavigationMenuItem[]>(() => [
             </template>
         </UDashboardSidebar>
 
-        <UDashboardPanel>
+        <UDashboardPanel :id="String(route.name)">
             <template #header>
                 <UDashboardNavbar :title="String(route.name)">
-
+                    <template #leading>
+                        <UDashboardSidebarCollapse variant="subtle" />
+                    </template>
                     <template #right>
                         <UColorModeButton />
                     </template>
